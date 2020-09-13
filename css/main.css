@@ -1,2 +1,21 @@
-
 /*  Put your CSS Here */
+
+.coloredForm {
+  background-color: lightgray;
+  width: 600px;
+  border: black solid 1px;
+  padding: 10px 0 10px 20px;
+}
+
+textarea {
+  max-width: 500px;
+}
+
+button {
+  border: 1px solid grey;
+  border-radius: 5px;
+  height: 30px;
+  width: auto;
+  font-weight: bold;
+  box-shadow: blue;
+}

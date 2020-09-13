@@ -7,7 +7,8 @@
         "omelet" becomes "omeletyay" 
 */
 function encodeVowelWord(word) {
-  return ""; // replace this!
+  let newWord = word + "yay";
+  return newWord;
 }
 
 /*  --------------------------------------------------------
@@ -20,7 +21,9 @@ function encodeVowelWord(word) {
         "cheers" becomes "eers-chay"
 */
 function encodeConsonantWord(word) {
-  return ""; // replace this!
+  let index = word.indexOf("a" || "e" || "i" || "o" || "u"); // get first index of vowel
+  let newWord = word.slice(index) + "-" + word.slice(0, index) + "ay"; // grab starting consonants, and bring them to the end of the word
+  return newWord;
 }
 
 /*  --------------------------------------------------------
@@ -35,20 +38,53 @@ function encodeConsonantWord(word) {
         "you" becomes "ou-yay" because it starts with a consonant "y"
 */
 function encodeWord(word) {
-  return ""; // replace this!
+  if (word[0] == ("a" || "e" || "i" || "o" || "u")) {
+    encodeVowelWord(word);
+  } else {
+    encodeConsonantWord(word);
+  }
 }
-
 /*  --------------------------------------------------------
     STEP # 4: Encode a full sentence or paragraph from english to pig latin.
 */
 function encodeText(text) {
-  return ""; // replace this!
+  let textArray = text.split(" ");
+  for (let item = 0; item < textArray.length; item++) {
+    textArray[item] = textArray[encodeWord(item)];
+  }
+  let newText = textArray.join(" ");
+
+  return newText;
 }
 
 /*  --------------------------------------------------------
     STEP # 5: Create a web form where users can input any message in plain english
     and get it encoded into pig latin.
 */
+
+let textAreaContentEncode = document.getElementById("textAreaEncode");
+let textValue = textAreaContentEncode.value;
+
+function encodeTextArea(textValue) {
+  let textArray = textValue.split(" ");
+  for (let item = 0; item < textArray.length; item++) {
+    textArray[item] = encodeWord(textArray[item]);
+  }
+
+  let newText = textArray.join(" ");
+
+  let displayText = document.createElement("div");
+  displayText.innerText = newText;
+  document.body.appendChild(displayText);
+  return newText;
+}
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  !!Text area for problem #5 button form submision not working, not processing, and not translating!!!!!!
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*/
+
+let translater = document.getElementById("encodeButton");
+translater.addEventListener("click", encodeTextArea);
 
 /*  
     STEP # 6: Decode pig latin words into words that begin with a vowel sound. 
@@ -59,7 +95,8 @@ function encodeText(text) {
         "omeletyay" becomes "omelet" 
 */
 function decodeVowelWord(word) {
-  return ""; // replace this!
+  let newWord = word.slice(0, word.length - 3);
+  return newWord;
 }
 
 /*  
@@ -71,10 +108,15 @@ function decodeVowelWord(word) {
         "eers-chay" becomes "cheers"
 */
 function decodeConsonantWord(word) {
-  return ""; // replace this!
+  let hyphenIndex = word.lastIndexOf("-");
+  let ayIndex = word.lastIndexOf("ay");
+  let newWord =
+    word.slice(hyphenIndex + 1, ayIndex) + word.slice(0, hyphenIndex);
+  return newWord;
 }
 
 /*  --------------------------------------------------------
+
     STEP # 8: Decide whether a given word starts with a vowel sound or consonant sound,
     and call decodeVowelWord(word) or decodeConsonantWord(word) when relevant.
     In other words, do the reverse of encodeWord.
@@ -87,20 +129,48 @@ function decodeConsonantWord(word) {
         "ou-yay" becomes "you" because it ends with a hyphen, a consonant sound, and an "ay"
 */
 function decodeWord(word) {
-  return ""; // replace this!
+  if (word.slice(-3, -1) == "yay") {
+    decodeConsonantWord(word);
+  } else {
+    decodeVowelWord(word);
+  }
 }
 
 /*  --------------------------------------------------------
     STEP # 9: Decode a full sentence or paragraph pig latin to english.
 */
 function decodeText(text) {
-  return ""; // replace this!
+  let textArray = text.split(" ");
+  for (item = 0; item < textArray.length; item++) {
+    textArray[item] = textArray[decodeWord(item)];
+  }
+  let newText = textArray.join(" ");
+  return newText; // replace this!
 }
 
 /*  --------------------------------------------------------
     STEP # 10: Create a web form where users can input any message in pig latin and get it 
     decoded into plain english.
 */
+let textAreaContentDecode = document.getElementById("textAreaDecode");
+let textValueDecode = textAreaContentDecode.value;
+
+function decodeTextArea(textValueDecode) {
+  let textArray = textValueDecode.split(" ");
+  for (let item = 0; item < textArray.length; item++) {
+    textArray[item] = encodeWord(textArray[item]);
+  }
+
+  let newText = textArray.join(" ");
+
+  let displayText = document.createElement("div");
+  displayText.innerText = newText;
+  document.body.appendChild(displayText);
+  return newText;
+}
+
+let translaterDecode = document.getElementById("decodeButton");
+translaterDecode.addEventListener("click", decodeTextArea);
 
 /*  --------------------------------------------------------
     BONUS: Go back to encodeText and decodeText and modify it so it can gracefully handle punctuation 

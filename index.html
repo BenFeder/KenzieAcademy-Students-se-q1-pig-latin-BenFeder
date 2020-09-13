@@ -21,6 +21,40 @@
 
   <body>
     <!-- Your html here -->
+    <div class="form">
+      <h2>English Encode to Pig Latin</h2>
+      <form class="coloredForm">
+        <label for="textAreaEncode">Text to translate into Pig Latin</label>
+        <br />
+        <textarea
+          id="textAreaEncode"
+          cols="50"
+          rows="10"
+          placeholder="Write text here."
+        ></textarea>
+        <br />
+        <button id="encodeButton">Encode text</button>
+      </form>
+    </div>
+
+    <br />
+
+    <div class="form">
+      <h2>Pig Latin Decode to English</h2>
+      <form class="coloredForm">
+        <label for="textAreaDecode">Text to translate into English</label>
+        <br />
+        <textarea
+          id="textAreaDecode"
+          cols="50"
+          rows="10"
+          placeholder="Write text here."
+        ></textarea>
+        <br />
+        <button id="decodeButton">Decode text</button>
+      </form>
+    </div>
+
     <script src="code.js"></script>
   </body>
 </html>
