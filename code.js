@@ -43,7 +43,6 @@ function encodeConsonantWord(word) {
   }
 
   let newWord = word.slice(index) + "-" + word.slice(0, index) + "ay"; // grab starting consonants, and bring them to the end of the word
-  console.log(index);
   return newWord;
 }
 
