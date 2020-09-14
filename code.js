@@ -21,8 +21,29 @@ function encodeVowelWord(word) {
         "cheers" becomes "eers-chay"
 */
 function encodeConsonantWord(word) {
-  let index = word.indexOf("a" || "e" || "i" || "o" || "u"); // get first index of vowel
+  let indexA = word.indexOf("a"); // get first index of vowel
+  let indexE = word.indexOf("e");
+  let indexI = word.indexOf("i");
+  let indexO = word.indexOf("o");
+  let indexU = word.indexOf("u");
+  let indexArray = [indexA, indexE, indexI, indexO, indexU];
+  let index = 10000;
+  // then find lowest value index of all existing vowels in word
+  for (let currentIndex = 0; currentIndex < indexArray.length; currentIndex++) {
+    if (indexArray[currentIndex] < index && indexArray[currentIndex] != -1) {
+      index = indexArray[currentIndex];
+    } else if (
+      indexArray[currentIndex] < index &&
+      indexArray[currentIndex] == -1
+    ) {
+      index = index;
+    } else if (indexArray[currentIndex] > index) {
+      index = index;
+    }
+  }
+
   let newWord = word.slice(index) + "-" + word.slice(0, index) + "ay"; // grab starting consonants, and bring them to the end of the word
+  console.log(index);
   return newWord;
 }
 
@@ -38,11 +59,19 @@ function encodeConsonantWord(word) {
         "you" becomes "ou-yay" because it starts with a consonant "y"
 */
 function encodeWord(word) {
-  if (word[0] == ("a" || "e" || "i" || "o" || "u")) {
-    encodeVowelWord(word);
+  let newWord = "";
+  if (
+    word[0] == "a" ||
+    word[0] == "e" ||
+    word[0] == "i" ||
+    word[0] == "o" ||
+    word[0] == "u"
+  ) {
+    newWord = encodeVowelWord(word);
   } else {
-    encodeConsonantWord(word);
+    newWord = encodeConsonantWord(word);
   }
+  return newWord;
 }
 /*  --------------------------------------------------------
     STEP # 4: Encode a full sentence or paragraph from english to pig latin.
@@ -77,6 +106,8 @@ function encodeTextArea(textValue) {
   displayText.innerText = newText;
   document.body.appendChild(displayText);
   return newText;
+
+  event.preventDefault();
 }
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   !!Text area for problem #5 button form submision not working, not processing, and not translating!!!!!!
@@ -145,7 +176,7 @@ function decodeText(text) {
     textArray[item] = textArray[decodeWord(item)];
   }
   let newText = textArray.join(" ");
-  return newText; // replace this!
+  return newText;
 }
 
 /*  --------------------------------------------------------
@@ -167,6 +198,8 @@ function decodeTextArea(textValueDecode) {
   displayText.innerText = newText;
   document.body.appendChild(displayText);
   return newText;
+
+  event.preventDefault();
 }
 
 let translaterDecode = document.getElementById("decodeButton");
