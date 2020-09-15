@@ -21,11 +21,11 @@ function encodeVowelWord(word) {
         "cheers" becomes "eers-chay"
 */
 function encodeConsonantWord(word) {
-  let indexA = word.indexOf("a"); // get first index of vowel
-  let indexE = word.indexOf("e");
-  let indexI = word.indexOf("i");
-  let indexO = word.indexOf("o");
-  let indexU = word.indexOf("u");
+  let indexA = word.toString().indexOf("a"); // get first index of vowel
+  let indexE = word.toString().indexOf("e");
+  let indexI = word.toString().indexOf("i");
+  let indexO = word.toString().indexOf("o");
+  let indexU = word.toString().indexOf("u");
   let indexArray = [indexA, indexE, indexI, indexO, indexU];
   let index = 10000;
   // then find lowest value index of all existing vowels in word
@@ -42,7 +42,8 @@ function encodeConsonantWord(word) {
     }
   }
 
-  let newWord = word.slice(index) + "-" + word.slice(0, index) + "ay"; // grab starting consonants, and bring them to the end of the word
+  let newWord =
+    word.toString().slice(index) + "-" + word.toString().slice(0, index) + "ay"; // grab starting consonants, and bring them to the end of the word
   return newWord;
 }
 
@@ -78,10 +79,9 @@ function encodeWord(word) {
 function encodeText(text) {
   let textArray = text.split(" ");
   for (let item = 0; item < textArray.length; item++) {
-    textArray[item] = textArray[encodeWord(item)];
+    textArray[item] = encodeWord(textArray[item]);
   }
   let newText = textArray.join(" ");
-
   return newText;
 }
 
@@ -94,19 +94,12 @@ let textAreaContentEncode = document.getElementById("textAreaEncode");
 let textValue = textAreaContentEncode.value;
 
 function encodeTextArea(textValue) {
-  let textArray = textValue.split(" ");
-  for (let item = 0; item < textArray.length; item++) {
-    textArray[item] = encodeWord(textArray[item]);
-  }
-
-  let newText = textArray.join(" ");
-
   let displayText = document.createElement("div");
-  displayText.innerText = newText;
+  displayText.innerText = encodeText(textValue);
   document.body.appendChild(displayText);
-  return newText;
-
   event.preventDefault();
+
+  // return newText;
 }
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   !!Text area for problem #5 button form submision not working, not processing, and not translating!!!!!!
@@ -125,7 +118,7 @@ translater.addEventListener("click", encodeTextArea);
         "omeletyay" becomes "omelet" 
 */
 function decodeVowelWord(word) {
-  let newWord = word.slice(0, word.length - 3);
+  let newWord = word.toString().slice(0, word.length - 3);
   return newWord;
 }
 
@@ -159,11 +152,14 @@ function decodeConsonantWord(word) {
         "ou-yay" becomes "you" because it ends with a hyphen, a consonant sound, and an "ay"
 */
 function decodeWord(word) {
-  if (word.slice(-3, -1) == "yay") {
-    decodeConsonantWord(word);
+  let newWord = "";
+  if (word.toString().includes("-") == true) {
+    newWord = decodeConsonantWord(word);
   } else {
-    decodeVowelWord(word);
+    newWord = decodeVowelWord(word);
   }
+
+  return newWord;
 }
 
 /*  --------------------------------------------------------
@@ -172,7 +168,7 @@ function decodeWord(word) {
 function decodeText(text) {
   let textArray = text.split(" ");
   for (item = 0; item < textArray.length; item++) {
-    textArray[item] = textArray[decodeWord(item)];
+    textArray[item] = decodeWord(textArray[item]);
   }
   let newText = textArray.join(" ");
   return newText;
@@ -186,18 +182,11 @@ let textAreaContentDecode = document.getElementById("textAreaDecode");
 let textValueDecode = textAreaContentDecode.value;
 
 function decodeTextArea(textValueDecode) {
-  let textArray = textValueDecode.split(" ");
-  for (let item = 0; item < textArray.length; item++) {
-    textArray[item] = encodeWord(textArray[item]);
-  }
-
-  let newText = textArray.join(" ");
+  decodeText(textValueDecode);
 
   let displayText = document.createElement("div");
-  displayText.innerText = newText;
+  displayText.innerText = decodeText(textValueDecode);
   document.body.appendChild(displayText);
-  return newText;
-
   event.preventDefault();
 }
 
